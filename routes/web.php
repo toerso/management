@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [SiteController::class, 'index']);
 Route::get('/admin_login', [SiteController::class, 'login']);
 Route::get('/student_login', [SiteController::class, 'login']);
+
 Route::get('/signup', [SiteController::class, 'signup']);
+
+Route::post('/signup', [AuthController::class, 'signup']);

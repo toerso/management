@@ -13,7 +13,7 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" class="form-control" id="login_pwd" placeholder="Enter your password">
             </div>
-            <button type="submit" class="btn btn-warning" style="width: 80px;">Login</button>
+            <button type="submit" class="btn btn-warning float-end mt-5" style="width: 80px;">Login</button>
         </form>
     </div>
 </div>
