@@ -12,7 +12,7 @@
 
 .container .login_section {
     width: 700px;
-    height: 300px;
+    height: auto;
     padding: 20px 10px;
     position: absolute;
     top: 50%;
@@ -21,7 +21,7 @@
 }
 
 .container .signup_section {
-    width: 700px;
+    width: 900px;
     height: auto;
     padding: 20px 10px;
     position: absolute;

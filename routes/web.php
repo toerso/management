@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +17,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//welcome route
 Route::get('/', [SiteController::class, 'index']);
-Route::get('/admin_login', [SiteController::class, 'login']);
-Route::get('/student_login', [SiteController::class, 'login']);
 
-Route::get('/signup', [SiteController::class, 'signup']);
+//admin log in route
+Route::get('/admin_login', [SiteController::class, 'adminLogin']);
+Route::post('/admin_login', [AdminController::class, 'login']);
 
-Route::post('/signup', [AuthController::class, 'signup']);
+//student log in route
+Route::get('/student_login', [SiteController::class, 'studentLogin']);
+Route::post('/student_login', [StudentController::class, 'login']);
+
+//student sign up route
+Route::get('/signup', [SiteController::class, 'studentSignup']);
+Route::post('/signup', [StudentController::class, 'signup']);
+
+//admin sign up route
+Route::get('/admin_signup', [SiteController::class, 'adminSignup']);
+Route::post('/admin_signup', [AdminController::class, 'signup']);
+
+//dash board route
+Route::get('/admin', [SiteController::class, "adminDashBoard"]);
+Route::get('/student', [SiteController::class, "studentDashBoard"]);
+
+//sign out route
+Route::get('/signout', [SiteController::class, "signout"]);

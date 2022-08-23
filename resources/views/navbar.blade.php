@@ -16,7 +16,15 @@
                     <a class="nav-link" href="#">Pricing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup">Sign up</a>
+                    @if (Session::has('status') && Session::get('status') === "active")
+                        <a class="nav-link" href="/student">{{Session::get('user')}}</a>
+                    @else
+                        <a class="nav-link" href="/signup">Sign up</a>
+                    @endif
+
+                    @if (Session::has('status') && Session::get('status') === "active")
+                            <a class="nav-link" href="/signout">Sign out</a>
+                    @endif
                 </li>
             </ul>
         </div>
