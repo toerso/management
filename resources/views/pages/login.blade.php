@@ -7,7 +7,7 @@
         @if (Session::has('fail')) 
             <div class="alert alert-danger">{{Session::get('fail')}}</div>
          @endif
-        <form action="{{$uri}}" method="POST">
+        <form action="{{route($routeName)}}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>

@@ -29,3 +29,31 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.sec-1x {
+    margin-top: 5%;
+    display: flex;
+    justify-content: start;
+}
+
+.sec-1x .sec-inner-1x {
+    width: 20%;
+}
+
+.sec-1x .sec-inner-2x {
+    margin-left: 10%;
+    width: 70%;
+}
+
+.sec-inner-2x .student-list {
+   width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-decoration: none;
+    margin-bottom: 30px;
+    color: grey;
+}

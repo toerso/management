@@ -7,7 +7,7 @@
         @if (Session::has('fail')) 
             <div class="alert alert-danger">{{Session::get('fail')}}</div>
          @endif
-        <form action="/signup" method="POST">
+        <form action="{{route('student_signup')}}" method="POST">
             @csrf
             <div class="d-flex justify-content-start">
                 <div class="mb-3 " style="width: 49%">
@@ -105,7 +105,7 @@
             </div>
             <button type="submit" class="btn btn-warning float-end mt-5">Sign up</button>
         </form>
-        <a href="/admin_signup" class="list-group-item" style="width: 124px; color:cornflowerblue; margin-top: -30px">Sign up as admin</a>
+        <a href="{{route('admin_signup')}}" class="list-group-item" style="width: 124px; color:rgb(103, 223, 23); margin-top: -30px">Sign up as admin</a>
     </div>
 </div>
 @endsection

@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="signup_section card">
-        <form action="/admin_signup" method="POST">
+        <form action="{{route('admin_signup')}}" method="POST">
             @csrf
             <div class="d-flex justify-content-start">
                 <div class="mb-3 " style="width: 49%">
@@ -60,7 +60,7 @@
             </div>
             <button type="submit" class="btn btn-warning float-end mt-5">Sign up</button>
         </form>
-        <a href="/signup" class="list-group-item" style="width: 134px; color:cornflowerblue; margin-top: -30px">Sign up as student</a>
+        <a href="{{route('student_signup')}}" class="list-group-item" style="width: 134px; color:rgb(19, 223, 46); margin-top: -30px">Sign up as student</a>
     </div>
 </div>
 @endsection

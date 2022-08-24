@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
@@ -26,15 +24,13 @@ class StudentController extends Controller
                 $request->session()->put('status', 'active');
                 $request->session()->put('user', "{$user->first_name} {$user->last_name}");
 
-                return redirect('student');
+                return redirect(route('student_dash'));
             } else {
-                $request->session()->put('status', 'inActive');
                 return back()->with("fail", 'Password not match');
             }
+        }else {
+            return back()->with("fail", 'Not found user any account');
         }
-
-        $request->session()->put('status', 'inActive');
-
         return back()->with("fail", 'Login details are not valid');
     }
 
@@ -47,7 +43,7 @@ class StudentController extends Controller
             'motherName' => 'required',
             'class' => 'required',
             'email' => 'required|email|unique:students',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'confirmPassword' => 'required|same:password'
         ]);
 
@@ -64,9 +60,51 @@ class StudentController extends Controller
             $request->session()->put('user', "$fname $lname");
             $request->session()->put('mail', $email);
 
-            return redirect('student');
+            return redirect(route('student_dash'));
         }
 
-        return redirect("signup")->with('fail', 'Something went worng. Try again with carefully.');
+        return redirect(route('student_signup'))->with('fail', 'Something went worng. Try again with carefully.');
+    }
+
+    public function update(Request $request, Student $student) {
+        $request->validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'fatherName' => 'required',
+            'motherName' => 'required',
+            'class' => 'required|min:1|max:12',
+            'email' => 'required|email'
+        ]);
+
+        $first_name = $request->input('firstName');
+        $last_name = $request->input('lastName');
+        $father_name = $request->input('fatherName');
+        $mother_name = $request->input('motherName');
+        $email = $request->input('email');
+        $class = $request->input('class');
+
+        if(Session::has('status') && Session::get('status') === 'active') {
+            $isUpdated = false;
+
+            
+
+            if(Session::has('loginId')) {
+                $isUpdated = $student->where('id', '=', Session::get('loginId'))->update(compact('first_name', 'last_name', 'father_name', 'mother_name', 'email', 'class'));
+            }else if(Session::has('mail')) {
+                $isUpdated = $student->where('email', '=', Session::get('mail'))->update(compact('first_name', 'last_name', 'father_name', 'mother_name', 'email', 'class'));
+            }
+
+            if($isUpdated) {
+                Session::pull('edit');
+                Session::put('user', "$first_name $last_name");
+                Session::put('mail', $email);
+
+                return redirect(route('student_dash'))->with('success', 'Updated your profile successfully.');
+            }
+
+            return redirect(route('student_profile_update'))->with('fail', 'Failed to update your profile. Try again with carefully.');
+        }
+
+        return back();
     }
 }
