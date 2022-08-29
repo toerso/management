@@ -28,8 +28,8 @@ class StudentController extends Controller
             } else {
                 return back()->with("fail", 'Password not match');
             }
-        }else {
-            return back()->with("fail", 'Not found user any account');
+        } else {
+            return back()->with("fail", 'Not found any user account');
         }
         return back()->with("fail", 'Login details are not valid');
     }
@@ -66,7 +66,8 @@ class StudentController extends Controller
         return redirect(route('student_signup'))->with('fail', 'Something went worng. Try again with carefully.');
     }
 
-    public function update(Request $request, Student $student) {
+    public function update(Request $request, Student $student)
+    {
         $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
@@ -83,18 +84,18 @@ class StudentController extends Controller
         $email = $request->input('email');
         $class = $request->input('class');
 
-        if(Session::has('status') && Session::get('status') === 'active') {
+        if (Session::has('status') && Session::get('status') === 'active') {
             $isUpdated = false;
 
-            
 
-            if(Session::has('loginId')) {
+
+            if (Session::has('loginId')) {
                 $isUpdated = $student->where('id', '=', Session::get('loginId'))->update(compact('first_name', 'last_name', 'father_name', 'mother_name', 'email', 'class'));
-            }else if(Session::has('mail')) {
+            } else if (Session::has('mail')) {
                 $isUpdated = $student->where('email', '=', Session::get('mail'))->update(compact('first_name', 'last_name', 'father_name', 'mother_name', 'email', 'class'));
             }
 
-            if($isUpdated) {
+            if ($isUpdated) {
                 Session::pull('edit');
                 Session::put('user', "$first_name $last_name");
                 Session::put('mail', $email);
