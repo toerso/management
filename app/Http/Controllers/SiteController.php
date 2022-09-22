@@ -8,37 +8,44 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
-     public function index() {
-          if(Session::has('status') && Session::has('role')) return redirect(route('admin_dash'));
-          
-          if(Session::has('status')) {
+     public function index()
+     {
+          if (Session::has('status') && Session::has('role')) return redirect(route('admin_dash'));
+
+          if (Session::has('status')) {
                return redirect(route('student_dash'));
           }
 
           return view('welcome');
      }
 
-     public function adminLogin() {
+     public function adminLogin()
+     {
           return view('pages.login')->with(['title' => 'admin login', 'routeName' => 'admin_login']);
      }
 
-     public function adminSignup() {
+     public function adminSignup()
+     {
           return view('pages.admin_signup');
      }
 
-     public function studentLogin() {
+     public function studentLogin()
+     {
 
           return view('pages.login')->with(['title' => 'student login', 'routeName' => 'student_login']);
      }
 
-    public function studentSignup() {
+     public function studentSignup()
+     {
 
           return view('pages.signup');
-    }
+     }
 
-    public function adminDashBoard(Admin $admin, Student $student) {
+     public function adminDashBoard(Admin $admin, Student $student)
+     {
           $user = [];
 
           if (Session::has('status') && Session::get('status') === 'active') {
@@ -54,19 +61,18 @@ class SiteController extends Controller {
           }
 
           return redirect(route('admin_login'));
-    }
+     }
 
-     public function studentDashBoard(Student $student) {
+     public function studentDashBoard(Student $student)
+     {
           $user = [];
 
-          if(Session::has('status') && Session::get('status') === 'active') {
-               if(Session::has('mail')) {
+          if (Session::has('status') && Session::get('status') === 'active') {
+               if (Session::has('mail')) {
                     $user = $student->where('email', '=', Session::get('mail'))->first();
-               }else if(Session::has('loginId')) {
+               } else if (Session::has('loginId')) {
                     $user = $student->where('id', '=', Session::get('loginId'))->first();
                }
-
-               
 
                return view('pages.s_dashboard')->with(compact('user'));
           }
@@ -74,40 +80,45 @@ class SiteController extends Controller {
           return redirect(route('student_login'));
      }
 
-     protected function _handleAdminWithData() {
-
+     protected function _handleAdminWithData()
+     {
      }
 
-     public function signout() {
+     public function signout()
+     {
           Session::flush();
           return redirect(route('welcome'));
      }
 
-     public function studentUpdate() {
+     public function studentUpdate()
+     {
           Session::put('edit', true);
 
           return redirect(route('student_dash'));
      }
 
-     public function adminUpdate() {
+     public function adminUpdate()
+     {
           Session::put('edit', true);
 
           return redirect(route('admin_profile'));
      }
 
-     public function editCancel() {
-          if(Session::has('edit')) {
+     public function editCancel()
+     {
+          if (Session::has('edit')) {
                Session::pull('edit');
           }
 
-          if(Session::has('role')) {
+          if (Session::has('role')) {
                return redirect(route('admin_profile'));
           }
-          
+
           return redirect(route('student_dash'));
      }
 
-     public function adminProfile(Admin $admin) {
+     public function adminProfile(Admin $admin)
+     {
           $user = [];
           $adminProfile = true;
 
@@ -124,7 +135,8 @@ class SiteController extends Controller {
           return redirect(route('admin_login'));
      }
 
-     public function deleteStudent(Student $student, $id) {
+     public function deleteStudent(Student $student, $id)
+     {
           if (Session::has('status') && Session::has('role')) {
                $student->where('id', '=', $id)->delete();
           }
