@@ -51,6 +51,7 @@ class AdminController extends Controller
             $request->session()->put('status', "active");
             $request->session()->put('user', "$fname $lname");
             $request->session()->put('mail', $email);
+            $request->session()->put('role', 'admin');
 
             return redirect(route('admin_dash'));
         }
